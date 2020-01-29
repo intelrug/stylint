@@ -65,6 +65,11 @@ var sortOrder = function( line ) {
 		// use custom ordering if specified, or fall back to in-built grouped ordering
 		orderingArr = Array.isArray( this.state.conf ) ? this.state.conf : ordering.grouped
 
+		var allIndex = orderingArr.indexOf( 'all' )
+		if ( allIndex === -1 ) {
+			allIndex = 0
+		}
+
 		// iterate over our cache copy, and sort it according to our config
 		sortedArr = sortedArr.sort( function( a, b ) {
 			var aIndex = orderingArr.indexOf( a )
@@ -72,11 +77,11 @@ var sortOrder = function( line ) {
 
 			// allow properties that don't exist in ordering array to be last
 			if ( aIndex < 0 ) {
-				aIndex = orderingArr.length
+				aIndex = allIndex
 			}
 
 			if ( bIndex < 0 ) {
-				bIndex = orderingArr.length
+				bIndex = allIndex
 			}
 
 			// -1 if our 'sorted (not yet sorted)' array is not in the right order
